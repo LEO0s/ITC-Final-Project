@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+
+    <!-- Bootstrap CSS (for beautiful design) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Custom CSS for styling -->
+    <style>
+        /* Background Design */
+        body {
+            background: linear-gradient(to right, #00c6ff, #0072ff); /* Gradient background */
+            font-family: Arial, sans-serif;
+            color: #000; /* Black font color */
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent card background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .btn-convert {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1.2rem;
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .btn-convert:hover {
+            background-color: #0056b3;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .result {
+            font-size: 1.3rem;
+            color: #28a745;
+            margin-top: 15px;
+        }
+
+        .alert {
+            font-size: 1rem;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 class="text-center">Unit Converter</h2>
+
+        <!-- Form for input -->
+        <div class="mb-3">
+            <label for="inputValue" class="form-label">Enter Value</label>
+            <input type="number" id="inputValue" class="form-control" placeholder="Enter value" />
+        </div>
+
+        <div class="mb-3">
+            <label for="conversionType" class="form-label">Select Conversion Type</label>
+            <select class="form-control" id="conversionType">
+                <option value="fahrenheitToCelsius">Fahrenheit to Celsius</option>
+                <option value="celsiusToFahrenheit">Celsius to Fahrenheit</option>
+                <option value="metersToFeet">Meters to Feet</option>
+                <option value="feetToMeters">Feet to Meters</option>
+            </select>
+        </div>
+
+        <!-- Button to perform conversion -->
+        <button class="btn btn-convert" onclick="performConversion()">Convert</button>
+
+        <!-- Display result -->
+        <div id="result" class="result"></div>
+
+        <!-- Error Alert -->
+        <div id="error" class="alert alert-danger" style="display: none;">
+            Please enter a valid number.
+        </div>
+        <!-- Back Button to redirect to index.html -->
+<div class="text-center mt-4">
+    <a href="index.html" class="btn btn-primary btn-lg">Back to Home</a>
+</div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS (required for Bootstrap's interactive components) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+    function performConversion() {
+        // Get the input value and conversion type
+        let inputValue = parseFloat(document.getElementById('inputValue').value);
+        let conversionType = document.getElementById('conversionType').value;
+        let resultText = "";
+        let errorMessage = document.getElementById('error');
+        let resultContainer = document.getElementById('result');
+        
+        // Hide error message initially
+        errorMessage.style.display = "none";
+
+        // Check if the input value is a number
+        if (isNaN(inputValue) || inputValue === "") {
+            errorMessage.style.display = "block";
+            resultContainer.innerHTML = "";
+            return;
+        }
+
+        // Perform the appropriate conversion based on selection
+        switch (conversionType) {
+            case 'fahrenheitToCelsius':
+                resultText = `${inputValue}°F = ${(inputValue - 32) * 5 / 9}°C`;
+                break;
+            case 'celsiusToFahrenheit':
+                resultText = `${inputValue}°C = ${(inputValue * 9 / 5) + 32}°F`;
+                break;
+            case 'metersToFeet':
+                resultText = `${inputValue} meters = ${inputValue * 3.28084} feet`;
+                break;
+            case 'feetToMeters':
+                resultText = `${inputValue} feet = ${inputValue / 3.28084} meters`;
+                break;
+            default:
+                resultText = "Invalid conversion type.";
+        }
+
+        // Display the result
+        resultContainer.innerHTML = resultText;
+    }
+</script>
+
+</body>
+</html>
